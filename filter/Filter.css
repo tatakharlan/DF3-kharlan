@@ -1,0 +1,12 @@
+.FilterBlock {
+    width: 300px;
+}
+.FilterBlock-search {
+    margin-bottom: 10px;
+}
+.FilterSelectBlock-select {
+    width: 100%;
+}
+.FilterBlock-search_btn {
+    float: right;
+}

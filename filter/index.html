@@ -1,0 +1,38 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta charset="utf-8" />
+  <title>Голосование</title>
+</head> 
+<body> 
+  <div id="container"></div> 
+      
+  <script src="https://unpkg.com/react@15/dist/react.js"></script> 
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script> 
+      
+  <script src="Filter.js"></script>
+  <link rel="stylesheet" type="text/css" href="Filter.css" />
+
+  <script>
+
+    var filterArr=[ 
+      {name:'философия',code:1 }, 
+      {name:'психология',code:2}, 
+      {name:'география',code:3 }, 
+      {name:'политика',code:4},
+      {name:'метафизика',code:5 }, 
+      {name:'палемика',code:6 },
+      {name:'механизация',code:7 },
+      {name:'перфоратор',code:8 },
+      {name:'произведение',code:9 }
+    ];
+
+    ReactDOM.render(
+      React.createElement(Filter,{filters:filterArr,startSortMode:1}), 
+      document.getElementById('container') 
+    );
+
+  </script>
+
+</body> 
+</html>
