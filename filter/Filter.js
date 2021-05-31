@@ -3,6 +3,8 @@ var Filter = React.createClass({
     displayName: 'Filter',
   
     propTypes: {
+      startSortMode: React.PropTypes.bool,
+      deffsearchtext: React.PropTypes.string.isRequired,
       filters:React.PropTypes.arrayOf(
         React.PropTypes.shape({
           code: React.PropTypes.number.isRequired,
@@ -11,25 +13,61 @@ var Filter = React.createClass({
         })
       )
     },
+    
+    getInitialState: function() {
+        return { 
+          sortMode: this.props.startSortMode ,
+          arrayFilter: this.props.filters,
+          searctext: this.props.deffsearchtext,         
+        };
+    },
+    sortFilter: function() {
+        if($(".FilterBlock-search_chkb").prop("checked") == true) {
+            this.setState( {sortMode: true } );
+            this.setState( {arrayFilter: this.state.arrayFilter.sort((a, b) => a.name > b.name ? 1 : -1) }); 
+            console.log("istartSortMode", this.state.sortMode);          
+        }else {
+            this.setState( {sortMode: false } );
+            this.setState( {arrayFilter:  this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1) } );
+            console.log("istartSortMode", this.state.sortMode); 
+        }        
+    },
+    searchTextChanged: function(EO) {
+        this.setState( {searctext: EO.target.value } );
+    },
+    searchRefresh: function() { 
+        if($(".FilterBlock-search_chkb").prop("checked") == true) {
+            this.setState( {sortMode: false } );
+            $(".FilterBlock-search_chkb").prop("checked", false);
+        }
+        this.setState( {arrayFilter:  this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1) } );
+        this.setState( {searctext: this.props.deffsearchtext } );
+        $(".FilterBlock-search_input").val("");
+    },
     render: function() {
         var filtersCode=[];
-        var filtersArr = this.props.filters;  
-
-        filtersArr.forEach((filter) => {
-          var filterCode=         
-              React.DOM.option({key:filter.code, value: filter.name},filter.name
-            );
+        if(this.state.sortMode == true) {
+            var filtersArr = this.state.arrayFilter.sort((a, b) => a.name > b.name ? 1 : -1);
+        } else {
+            var filtersArr = this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1);
+        }
+        
+        filtersArr.forEach((filter) => {            
+          if(filter.name.indexOf(this.state.searctext) == -1) {            
+          } else {
+            var filterCode = React.DOM.option({key:filter.code, value: filter.name},filter.name);
             filtersCode.push(filterCode);
-        });
-    
+          }            
+        });       
+
         return React.DOM.div( {className:'FilterBlock'}, 
           React.DOM.div( {className:'FilterBlock-search'},
-          React.DOM.input( {type:'checkbox',onClick:this.sorter}) , 
+          React.DOM.input( {className:'FilterBlock-search_chkb', type:'checkbox', onClick:this.sortFilter}) , 
           React.DOM.input( {type:'text',name:'filtersearch',className:'FilterBlock-search_input',
           onChange:this.searchTextChanged
           }),
           React.DOM.input( {type:'button',name:'filtersearch-btn',className:'FilterBlock-search_btn',
-          onChange:this.searchRefresh, value: 'Сбросить'
+          onClick:this.searchRefresh, value: 'Сбросить'
           })),   
           React.DOM.div( {className:'FilterSelectBlock'},
           React.DOM.select( {className:'FilterSelectBlock-select', size: 6}, filtersCode )));        
