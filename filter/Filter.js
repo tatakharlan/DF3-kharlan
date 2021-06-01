@@ -21,28 +21,24 @@ var Filter = React.createClass({
           searctext: this.props.deffsearchtext,         
         };
     },
-    sortFilter: function() {
-        if($(".FilterBlock-search_chkb").prop("checked") == true) {
+    sortFilter: function(EO) {        
+        if(EO.target.checked == true) {
             this.setState( {sortMode: true } );
             this.setState( {arrayFilter: this.state.arrayFilter.sort((a, b) => a.name > b.name ? 1 : -1) }); 
-            console.log("istartSortMode", this.state.sortMode);          
+                   
         }else {
             this.setState( {sortMode: false } );
             this.setState( {arrayFilter:  this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1) } );
-            console.log("istartSortMode", this.state.sortMode); 
+            
         }        
     },
     searchTextChanged: function(EO) {
         this.setState( {searctext: EO.target.value } );
     },
-    searchRefresh: function() { 
-        if($(".FilterBlock-search_chkb").prop("checked") == true) {
-            this.setState( {sortMode: false } );
-            $(".FilterBlock-search_chkb").prop("checked", false);
-        }
+    searchRefresh: function() {         
+        this.setState( {sortMode: false } );        
         this.setState( {arrayFilter:  this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1) } );
-        this.setState( {searctext: this.props.deffsearchtext } );
-        $(".FilterBlock-search_input").val("");
+        this.setState( {searctext: this.props.deffsearchtext } );        
     },
     render: function() {
         var filtersCode=[];
@@ -62,9 +58,9 @@ var Filter = React.createClass({
 
         return React.DOM.div( {className:'FilterBlock'}, 
           React.DOM.div( {className:'FilterBlock-search'},
-          React.DOM.input( {className:'FilterBlock-search_chkb', type:'checkbox', onClick:this.sortFilter}) , 
+          React.DOM.input( {className:'FilterBlock-search_chkb', type:'checkbox', onClick:this.sortFilter, checked: this.state.sortMode}) , 
           React.DOM.input( {type:'text',name:'filtersearch',className:'FilterBlock-search_input',
-          onChange:this.searchTextChanged
+          onChange:this.searchTextChanged, value:this.state.searctext 
           }),
           React.DOM.input( {type:'button',name:'filtersearch-btn',className:'FilterBlock-search_btn',
           onClick:this.searchRefresh, value: 'Сбросить'
