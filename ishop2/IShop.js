@@ -42,7 +42,6 @@ var IShop = React.createClass({
           cbSelected:this.goodSelected,
           cbDeleted:this.goodDeleted,
           selectedGood:this.state.selectedGood,
-          deletedGood:this.state.deletedGood,
         })
       )
 
