@@ -8,8 +8,7 @@ var Filter = React.createClass({
       filters:React.PropTypes.arrayOf(
         React.PropTypes.shape({
           code: React.PropTypes.number.isRequired,
-          name: React.PropTypes.string.isRequired,
-          display: React.PropTypes.bool,
+          name: React.PropTypes.string.isRequired
         })
       )
     },

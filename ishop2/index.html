@@ -1,0 +1,37 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta charset="utf-8" />
+  <title>Голосование</title>
+</head> 
+<body> 
+  <div id="container"></div> 
+      
+  <script src="https://unpkg.com/react@15/dist/react.js"></script> 
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script> 
+      
+  <script src="IShop.js"></script>
+  <link rel="stylesheet" type="text/css" href="IShop.css" />
+
+  <script>
+
+    var shopTitle='iShop';
+    var shopGoodsArr=[ 
+      {name:'ноутбук',code:1,count:12, price: 122, url: 'https://content2.onliner.by/catalog/device/main/196b00184accd7e891932c8c55f96680.jpeg' }, 
+      {name:'самокат',code:2,count:55, price: 962, url: 'https://content2.onliner.by/catalog/device/main/5872f185adc20dc7d2d96700d6a6aafe.jpeg' }, 
+      {name:'рюкзак',code:3,count:32, price: 452, url: 'https://content2.onliner.by/catalog/device/main/9bbadf63bf111838fa96a394b8ddae07.jpeg' }, 
+      {name:'вентилятор',code:4,count:44, price: 872, url: 'https://content2.onliner.by/catalog/device/main/f454208bdd36e671943a675b0f6e6f34.jpeg' }
+      
+    ];
+    var selectedTr,
+        candeletedRow;
+        
+    ReactDOM.render(
+      React.createElement(IShop,{title:shopTitle,goods:shopGoodsArr, canDeleted: candeletedRow}), 
+      document.getElementById('container') 
+    );
+
+  </script>
+
+</body> 
+</html>
