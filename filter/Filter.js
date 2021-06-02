@@ -24,11 +24,11 @@ var Filter = React.createClass({
     sortFilter: function(EO) {        
         if(EO.target.checked == true) {
             this.setState( {sortMode: true } );
-            this.setState( {arrayFilter: this.state.arrayFilter.sort((a, b) => a.name > b.name ? 1 : -1) }); 
+            this.setState( {arrayFilter: this.state.arrayFilter.sort((a, b) => a.name > b.name ? 1 : -1) });
                    
         }else {
             this.setState( {sortMode: false } );
-            this.setState( {arrayFilter:  this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1) } );
+            this.setState( {arrayFilter: this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1) } );
             
         }        
     },
