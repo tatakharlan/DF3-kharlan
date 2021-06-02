@@ -1,0 +1,6 @@
+.IShop-table-row {
+    padding: 7px 13px;    
+}
+.IShop-table-row_selected {
+    background: #cccccc;
+}

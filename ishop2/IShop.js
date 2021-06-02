@@ -2,60 +2,49 @@ var IShop = React.createClass({
 
     displayName: 'IShop',
     propTypes: {   
-      selectedTr: React.PropTypes.string, 
-      canDeleted: React.PropTypes.string,
       goods:React.PropTypes.arrayOf(
         React.PropTypes.shape({
           code: React.PropTypes.number.isRequired,
-          name: React.PropTypes.string.isRequired,
+          goodName: React.PropTypes.string.isRequired,
           count: React.PropTypes.number.isRequired,
           price: React.PropTypes.number.isRequired,
           url: React.PropTypes.string.isRequired,
         })
       )
     },
-    getDefaultProps: function() {
-      return { question: "Просто магазин" }
+    getInitialState: function() {
+      return { 
+        selectedGood: null,
+        ArrGood: this.props.goods,
+      };
     },
-    trClick: function(EO){  
-      if (EO.target.tagName == 'TD') {             
-        this.hightLight( EO.target.closest('tr'));
-      }
+    goodSelected: function(code) {
+      console.log('выбран товар с кодом '+code);
+      this.setState( {selectedGood:code} );
     },
-    deleteTr: function(EO) {
-      EO.preventDefault();
-      console.log("EO.target", EO.target.closest('tr'));
-      if(EO.target.closest('tr') == canDeletedTr ) {
-        EO.target.closest('tr').remove();
-      }else {
-        alert("Кликните на строку");
-      }
-    },
-    hightLight: function(el) { 
-      if(selectedTr) {
-        selectedTr.classList.remove('IShop-table-row_selected');
-      }       
-      selectedTr = el; 
-      selectedTr.classList.add('IShop-table-row_selected');
-      canDeletedTr = el;
+    goodDeleted: function(code) {
+      console.log('удален товар с кодом '+code);
+      var result = confirm("Вы хотите удалить этот товар?");
+      if(result) {        
+        for(let i=0; i< this.state.ArrGood.length; i++) {
+          if(this.state.ArrGood[i].code == code){
+            this.state.ArrGood.splice(i,1);            
+          }
+        }
+        this.setState( {ArrGood: this.state.ArrGood} );        
+      }   
     },
     render: function() {
-      var goodsArr = this.props.goods;
-      var goodsCode=[];
      
-      goodsArr.forEach((good) => {
-        var goodCode=         
-            React.DOM.tr({className: "IShop-table-row", key:good.code, onClick: this.trClick}, 
-            React.DOM.td(null,good.name),
-            React.DOM.td(null,good.price),
-            React.DOM.td(null,good.count),
-            React.DOM.td(null,good.url),
-            React.DOM.td(null,
-              React.DOM.input({type:'button', onClick:this.deleteTr, value: 'Удалить'}),
-            )
-          );
-        goodsCode.push(goodCode);
-      });
+      var goodsCode = this.state.ArrGood.map( v =>
+        React.createElement(Good, {key:v.code,
+          goodName:v.goodName, count:v.count, code:v.code, price:v.price,url:v.url,           
+          cbSelected:this.goodSelected,
+          cbDeleted:this.goodDeleted,
+          selectedGood:this.state.selectedGood,
+          deletedGood:this.state.deletedGood,
+        })
+      )
 
       return React.DOM.div( {className:'IShop'}, 
         React.DOM.h1(null, this.props.title ),
@@ -67,8 +56,8 @@ var IShop = React.createClass({
         React.DOM.th(null,"count"),
         React.DOM.th(null,"url"),
         React.DOM.th(null,""))), 
-        React.DOM.tbody( null, goodsCode ,   
-      )));
+        React.DOM.tbody( null, goodsCode) ,   
+      ));
     },
   
   });
