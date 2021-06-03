@@ -26,7 +26,7 @@ var IShop = React.createClass({
       console.log('удален товар с кодом '+code);
       var result = confirm("Вы хотите удалить этот товар?");
       if(result) {  
-        var newArrGoods =  this.state.ArrGood;    
+        var newArrGoods =  this.props.goods;    
         for(let i=0; i< newArrGoods.length; i++) {
           if(newArrGoods[i].code == code){
             newArrGoods.splice(i,1);            
