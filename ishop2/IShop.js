@@ -30,7 +30,8 @@ var IShop = React.createClass({
         console.log("copyArrGoods", copyArrGoods);    
         for(let i=0; i< copyArrGoods.length; i++) {
           if(copyArrGoods[i].code == code){
-            copyArrGoods.splice(i,1);            
+            copyArrGoods.splice(i,1); 
+            break;           
           }
         }
         this.setState( {ArrGood: copyArrGoods} );        
