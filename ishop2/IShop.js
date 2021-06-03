@@ -25,13 +25,14 @@ var IShop = React.createClass({
     goodDeleted: function(code) {
       console.log('удален товар с кодом '+code);
       var result = confirm("Вы хотите удалить этот товар?");
-      if(result) {        
-        for(let i=0; i< this.state.ArrGood.length; i++) {
-          if(this.state.ArrGood[i].code == code){
-            this.state.ArrGood.splice(i,1);            
+      if(result) {  
+        var newArrGoods =  this.state.ArrGood;    
+        for(let i=0; i< newArrGoods.length; i++) {
+          if(newArrGoods[i].code == code){
+            newArrGoods.splice(i,1);            
           }
         }
-        this.setState( {ArrGood: this.state.ArrGood} );        
+        this.setState( {ArrGood: newArrGoods} );        
       }   
     },
     render: function() {

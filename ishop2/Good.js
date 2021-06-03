@@ -14,10 +14,9 @@ var Good = React.createClass({
     goodClicked: function() {
       this.props.cbSelected(this.props.code);
     },
-    goodDeleted: function(EO) {
-      EO.preventDefault();
+    goodDeleted: function(EO) {      
       this.props.cbDeleted(this.props.code); 
-      return false;     
+      EO.stopPropagation();      
     },
     render: function() {     
       return  React.DOM.tr({className: "IShop-table-row "+((this.props.selectedGood == this.props.code)? "IShop-table-row_selected" : ""), key:this.props.code, onClick: this.goodClicked}, 
