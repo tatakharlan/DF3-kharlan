@@ -21,7 +21,7 @@ var Filter = React.createClass({
         };
     },
     sortFilter: function(EO) { 
-      var copyFilterArr =  this.state.filterArray;      
+      var copyFilterArr =  this.state.filterArray.slice();      
         if(EO.target.checked == true) {
             this.setState( {sortMode: true } ); 
             copyFilterArr.sort((a, b) => a.name > b.name ? 1 : -1) ;                                            
@@ -36,7 +36,7 @@ var Filter = React.createClass({
     },
     searchRefresh: function() {         
         this.setState( {sortMode: false } ); 
-        var copyFilterArr =  this.state.filterArray;        
+        var copyFilterArr =  this.state.filterArray.slice();        
         copyFilterArr.sort((a, b) => a.code > b.code ? 1 : -1) ; 
         this.setState( {filterArray: copyFilterArr } ); 
         this.setState( {searctext: this.props.deffsearchtext } );        
