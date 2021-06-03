@@ -37,7 +37,7 @@ var IShop = React.createClass({
     },
     render: function() {
      
-      var goodsCode = this.state.ArrGood.map( v =>
+      var goodsCode = this.props.goods.map( v =>
         React.createElement(Good, {key:v.code,
           goodName:v.goodName, count:v.count, code:v.code, price:v.price,url:v.url,           
           cbSelected:this.goodSelected,

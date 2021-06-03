@@ -16,37 +16,34 @@ var Filter = React.createClass({
     getInitialState: function() {
         return { 
           sortMode: this.props.startSortMode ,
-          arrayFilter: this.props.filters,
           searctext: this.props.deffsearchtext,         
         };
     },
     sortFilter: function(EO) {        
         if(EO.target.checked == true) {
             this.setState( {sortMode: true } );
-            this.setState( {arrayFilter: this.state.arrayFilter.sort((a, b) => a.name > b.name ? 1 : -1) });
-                   
+            this.props.filters.sort((a, b) => a.name > b.name ? 1 : -1) ;                                
         }else {
             this.setState( {sortMode: false } );
-            this.setState( {arrayFilter: this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1) } );
-            
+            this.props.filters.sort((a, b) => a.code > b.code ? 1 : -1) ;            
         }        
     },
     searchTextChanged: function(EO) {
         this.setState( {searctext: EO.target.value } );
     },
     searchRefresh: function() {         
-        this.setState( {sortMode: false } );        
-        this.setState( {arrayFilter:  this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1) } );
+        this.setState( {sortMode: false } );   
+        this.props.filters.sort((a, b) => a.code > b.code ? 1 : -1) ; 
         this.setState( {searctext: this.props.deffsearchtext } );        
     },
     render: function() {
         var filtersCode=[];
         if(this.state.sortMode == true) {
-            var filtersArr = this.state.arrayFilter.sort((a, b) => a.name > b.name ? 1 : -1);
+          var filtersArr = this.props.filters.sort((a, b) => a.name > b.name ? 1 : -1);
         } else {
-            var filtersArr = this.state.arrayFilter.sort((a, b) => a.code > b.code ? 1 : -1);
+          var filtersArr =this.props.filters.sort((a, b) => a.code > b.code ? 1 : -1);
         }
-        
+         
         filtersArr.forEach((filter) => {            
           if(filter.name.indexOf(this.state.searctext) == -1) {            
           } else {
