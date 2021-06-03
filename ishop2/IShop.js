@@ -26,18 +26,19 @@ var IShop = React.createClass({
       console.log('удален товар с кодом '+code);
       var result = confirm("Вы хотите удалить этот товар?");
       if(result) {  
-        var newArrGoods =  this.props.goods;    
-        for(let i=0; i< newArrGoods.length; i++) {
-          if(newArrGoods[i].code == code){
-            newArrGoods.splice(i,1);            
+        var copyArrGoods =  this.state.ArrGood.slice();
+        console.log("copyArrGoods", copyArrGoods);    
+        for(let i=0; i< copyArrGoods.length; i++) {
+          if(copyArrGoods[i].code == code){
+            copyArrGoods.splice(i,1);            
           }
         }
-        this.setState( {ArrGood: newArrGoods} );        
+        this.setState( {ArrGood: copyArrGoods} );        
       }   
     },
     render: function() {
      
-      var goodsCode = this.props.goods.map( v =>
+      var goodsCode = this.state.ArrGood.map( v =>
         React.createElement(Good, {key:v.code,
           goodName:v.goodName, count:v.count, code:v.code, price:v.price,url:v.url,           
           cbSelected:this.goodSelected,
