@@ -21,7 +21,7 @@ class IShop extends React.Component {
       )
     };
     state = {
-      cardMode: "",
+      cardMode: null,
       selectedGood: null,
       editedGood: null,
       ArrGood: this.props.goods,
@@ -29,7 +29,7 @@ class IShop extends React.Component {
     goodSelected = (code) => {
       console.log('выбран товар с кодом '+code);
       this.setState( {selectedGood:code} );
-      this.setState( {cardMode:"Просмотр"} );
+      this.setState( {cardMode:1} );
     }
     goodDeleted = (code)=> {
       console.log('удален товар с кодом '+code);
@@ -47,7 +47,10 @@ class IShop extends React.Component {
     goodEdited = (code)=> {
       console.log('редактируется товар с кодом '+code);
       this.setState( {editedGood:code} );
-      this.setState( {cardMode:"Редактирование"} );
+      this.setState( {cardMode:2} );
+    }
+    goodChanged = (code)=> {
+
     }
     render() {
      
@@ -56,16 +59,15 @@ class IShop extends React.Component {
           goodName= {v.goodName}  count= {v.count} code={v.code} price={v.price} url={v.url}          
           cbSelected={this.goodSelected}
           cbDeleted={this.goodDeleted}
-          cbEdited={this.goodEdited}
+          cbEdited={this.goodEdited}          
+          cbItemChanged = {this.goodChanged}
           selectedGood={this.state.selectedGood}
           cardMode={this.state.cardMode}
         />
       );
-      let cardGood
-      if(this.state.cardMode == "Просмотр") {
-        cardGood = this.props.goods.filter( v =>  (v.code == this.state.selectedGood));
-      } else if (this.state.cardMode == "Редактирование") {
-        cardGood = this.props.goods.filter( v =>  (v.code == this.state.editeddGood));
+      let cardGood = [];
+      if(this.state.cardMode == 2) {
+        cardGood = this.props.goods.filter( v =>  (v.code == this.state.editedGood));
       } else {
         cardGood = this.props.goods.filter( v =>  (v.code == this.state.selectedGood));
       }
@@ -74,7 +76,8 @@ class IShop extends React.Component {
       console.log("cardGood", cardGood);
       let cardCode = cardGood.map( v =>
         <Card key={v.code} editedGood = {this.state.editedGood} selectedGood = {this.state.selectedGood} cardMode = {this.state.cardMode}
-                goodName= {v.goodName}  count= {v.count} code={v.code} price={v.price} url={v.url} 
+                goodName= {v.goodName} 
+                cbItemChanged = {this.goodChanged}  count= {v.count} code={v.code} price={v.price} url={v.url} 
         />      
       )
 
@@ -96,9 +99,16 @@ class IShop extends React.Component {
           {
             ((this.state.selectedGood)||(this.state.editedGood)) &&
                 <div className="Card">
-                  <h2>Card {this.props.mode}</h2>
-                 
+                  <h2>Card {(this.state.cardMode == "2")? "edit" : "view"}</h2>  
+                  <table className="IShop-card">               
                   {cardCode}
+                  </table>
+                  {((this.state.cardMode == 2)&& 
+                  <div>
+                    <button type="button">Save</button>
+                    <button type="button">Cancel</button>
+                  </div>
+                  )}
                 </div>
           }
         </div>

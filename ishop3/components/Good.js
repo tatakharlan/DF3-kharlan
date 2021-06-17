@@ -8,14 +8,15 @@ class Good extends React.Component {
     static propTypes = {  
       cbDeleted: PropTypes.func.isRequired, 
       cbSelected: PropTypes.func.isRequired,
-      cbEdited: PropTypes.func.isRequired,      
+      cbEdited: PropTypes.func.isRequired,
       code: PropTypes.number.isRequired,
       goodName: PropTypes.string.isRequired,
       count: PropTypes.number.isRequired,
       price: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
       selectedGood:PropTypes.number,
-      editedGood:PropTypes.number,
+      editedGood:PropTypes.number,      
+      cbItemChanged:PropTypes.func.isRequired,
     };
     goodClicked = ()=> {
       this.props.cbSelected(this.props.code);

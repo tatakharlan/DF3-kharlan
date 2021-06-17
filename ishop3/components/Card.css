@@ -1,0 +1,6 @@
+.IShop-card_error {
+    display: none;
+}
+.IShop-card_error.visible_error {
+    display: inline-block;
+}
