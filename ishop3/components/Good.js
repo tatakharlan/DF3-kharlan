@@ -16,7 +16,6 @@ class Good extends React.Component {
       url: PropTypes.string.isRequired,
       selectedGood:PropTypes.number,
       editedGood:PropTypes.number,      
-      cbItemChanged:PropTypes.func.isRequired,
     };
     goodClicked = ()=> {
       this.props.cbSelected(this.props.code);
