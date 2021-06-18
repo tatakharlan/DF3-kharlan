@@ -57,6 +57,10 @@ class IShop extends React.Component {
       this.setState( {selectedGood:code} );
       this.setState( {cardMode:2} );
       this.setState( {newGood:false} );
+      this.setState( {goodNameError:false} );
+      this.setState( {priceError:false} );
+      this.setState( {countError:false} );
+      this.setState( {urlError:false} );
     }
     itemChanged = (item, mode)=> {   
       if(item == "goodName")  {

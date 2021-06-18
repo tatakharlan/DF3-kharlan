@@ -53,7 +53,33 @@ class Card extends React.Component {
       console.log("data",data );
       this.props.cbSaved(data);
     }
-
+    cancelEdit= ()=>{
+      if(this.props.newGood) {
+        let form = document.querySelector('.GoodsForm');        
+        for (let i=0; i < form.elements.length; i++) {                      
+            let elemName = form.elements[i].name;                         
+            if((elemName == "count")||(elemName == "price")||(elemName == "code")) {
+              document.getElementsByName(elemName)[0].value = null;
+            } else {
+              document.getElementsByName(elemName)[0].value = "";
+            } 
+            this.props.cbitemChanged(elemName, true);                
+        }
+      }else {
+        let form = document.querySelector('.GoodsForm');        
+        for (let i=0; i < form.elements.length; i++) {                      
+            let elemName = form.elements[i].name;
+            let elemValue = form.elements[i].value; 
+            let elemDefaultValue = form.elements[i].defaultValue;   
+            if(elemValue == elemDefaultValue ) {              
+            } else {
+              document.getElementsByName(elemName)[0].value = elemDefaultValue;
+            } 
+            this.props.cbitemChanged(elemName, false);                
+        }
+      }
+      
+    }
     render() {  
       
       if(this.props.cardMode == 1) {
@@ -88,28 +114,28 @@ class Card extends React.Component {
                             <td>goodName</td>
                             <td>
                               <input type="text" defaultValue={this.props.goodName} name="goodName" onChange={this.itemChanged} data-item="goodName"/>
-                              <label className= {((this.props.goodNameError == true)?"IShop-card_error visible_error":"IShop-card_error")} data-error="goodName">goodName is required</label>
+                              <label className= {((this.props.goodNameError == true)?"IShop-card_error visible_error":"IShop-card_error")} >goodName is required</label>
                             </td>                           
                         </tr>
                         <tr>
                             <td>price</td>
                             <td>
                               <input type="text" defaultValue={this.props.price} name="price" onChange={this.itemChanged} data-item="price"/>
-                              <label className= {((this.props.priceError == true)?"IShop-card_error visible_error":"IShop-card_error")} data-error="price">price is required</label>
+                              <label className= {((this.props.priceError == true)?"IShop-card_error visible_error":"IShop-card_error")} >price is required</label>
                             </td>
                         </tr> 
                         <tr>
                             <td>count</td>
                             <td>
                               <input type="text" defaultValue={this.props.count} name="count" onChange={this.itemChanged} data-item="count"/>
-                              <label className= {((this.props.countError == true)?"IShop-card_error visible_error":"IShop-card_error")} data-error="count">count is required</label>
+                              <label className= {((this.props.countError == true)?"IShop-card_error visible_error":"IShop-card_error")} >count is required</label>
                             </td>
                         </tr>
                         <tr>
                             <td>url</td>
                             <td>
                               <input type="text" defaultValue={this.props.url} name="url" onChange={this.itemChanged} data-item="url"/>
-                              <label className= {((this.props.urlError == true)?"IShop-card_error visible_error":"IShop-card_error")} data-error="url">url is required</label>
+                              <label className= {((this.props.urlError == true)?"IShop-card_error visible_error":"IShop-card_error")}>url is required</label>
                             </td>
                         </tr>
                   </tbody>
@@ -117,8 +143,8 @@ class Card extends React.Component {
               <div>
               <input type="hidden" defaultValue={((this.props.newGood == true)?Math.floor(Math.random()*1000):this.props.code)} name="code"/>
 
-              <button type="button" disabled= {((this.props.urlError == true)||(this.props.countError == true)||(this.props.priceError == true)||(this.props.pgoodNameError == true)&& "disabled")} onClick={this.saveGood}>Save</button>
-              <button type="button">Cancel</button>
+              <button type="button" disabled= {((this.props.goodNameError == true)||(this.props.urlError == true)||(this.props.countError == true)||(this.props.priceError == true)&& "disabled")} onClick={this.saveGood}>Save</button>
+              <button type="button" onClick={this.cancelEdit}>Cancel</button>
             </div>
             </form>
         )
