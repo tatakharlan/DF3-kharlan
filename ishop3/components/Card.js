@@ -49,21 +49,18 @@ class Card extends React.Component {
           if(elemName != "") {            
             data[elemName] = elemValue; 
           }                 
-      }
-      console.log("data",data );
+      }      
       this.props.cbSaved(data);
     }
     cancelEdit= ()=>{
       if(this.props.newGood) {
         let form = document.querySelector('.GoodsForm');        
         for (let i=0; i < form.elements.length; i++) {                      
-            let elemName = form.elements[i].name;                         
-            if((elemName == "count")||(elemName == "price")||(elemName == "code")) {
-              document.getElementsByName(elemName)[0].value = null;
-            } else {
-              document.getElementsByName(elemName)[0].value = "";
-            } 
-            this.props.cbitemChanged(elemName, true);                
+            let elemName = form.elements[i].name; 
+            if(document.getElementsByName(elemName)[0]) {
+              document.getElementsByName(elemName)[0].value = null;  
+              this.props.cbitemChanged(elemName, true); 
+            }              
         }
       }else {
         let form = document.querySelector('.GoodsForm');        
@@ -73,7 +70,9 @@ class Card extends React.Component {
             let elemDefaultValue = form.elements[i].defaultValue;   
             if(elemValue == elemDefaultValue ) {              
             } else {
-              document.getElementsByName(elemName)[0].value = elemDefaultValue;
+              if(document.getElementsByName(elemName)[0]) {
+                document.getElementsByName(elemName)[0].value = elemDefaultValue;
+              }              
             } 
             this.props.cbitemChanged(elemName, false);                
         }
