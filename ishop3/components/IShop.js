@@ -100,7 +100,7 @@ class IShop extends React.Component {
       this.setState( {urlError:true} );      
     }
     goodSaved =(data)=> {
-      let newArrGoods =  this.props.goods.slice();
+      let newArrGoods =  this.state.ArrGood.slice();
       if(this.state.newGood == true) {        
         newArrGoods.push(data);
       }else {        
