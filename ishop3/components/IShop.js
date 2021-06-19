@@ -29,7 +29,11 @@ class IShop extends React.Component {
       goodNameError: false,
       priceError: false,
       countError:false,
-      urlError:false
+      urlError:false,
+      goodNameEdit: false,
+      priceEdit: false,
+      countEdit:false,
+      urlEdit:false
     }
     goodSelected = (code) => {
       console.log('выбран товар с кодом '+code);
@@ -62,10 +66,15 @@ class IShop extends React.Component {
       this.setState( {countError:false} );
       this.setState( {urlError:false} );
     }
-    itemChanged = (item, mode)=> {   
+    itemChanged = (item, mode, ischanged)=> {   
       if(item == "goodName")  {
         if(mode == false) {
           this.setState( { goodNameError: false });
+          if(ischanged == true) {
+            this.setState( { goodNameEdit: true });
+          }else{
+            this.setState( { goodNameEdit: false });
+          }
         }else {
           this.setState( { goodNameError: true });
         }
@@ -73,6 +82,11 @@ class IShop extends React.Component {
       if(item == "price")  {
         if(mode == false) {
           this.setState( { priceError: false });
+          if(ischanged == true) {
+            this.setState( { priceEdit: true });
+          }else{
+            this.setState( { priceEdit: false });
+          }
         }else {
           this.setState( { priceError: true });
         }
@@ -80,6 +94,11 @@ class IShop extends React.Component {
       if(item == "count")  {
         if(mode == false) {
           this.setState( { countError: false });
+          if(ischanged == true) {
+            this.setState( { countEdit: true });
+          }else{
+            this.setState( { countEdit: false });
+          }
         }else {
           this.setState( { countError: true });
         }
@@ -87,11 +106,17 @@ class IShop extends React.Component {
       if(item == "url")  {
         if(mode == false) {
           this.setState( { urlError: false });
+          if(ischanged == true) {
+            this.setState( { urlEdit: true });
+          }else{
+            this.setState( { urlEdit: false });
+          }
         }else {
           this.setState( { urlError: true });
         }
       }       
     }
+    
     addGood=()=>{
       this.setState( {newGood:true} );
       this.setState( {cardMode:2} );
@@ -122,6 +147,10 @@ class IShop extends React.Component {
         this.setState( {newGood:false} );
       }      
       this.setState( {ArrGood: newArrGoods} );
+      this.setState( {goodNameEdit:false} );
+      this.setState( {priceEdit:false} );
+      this.setState( {countEdit:false} );
+      this.setState( {urlEdit:false} );
     }
     EditModeCancel=()=> {
       this.setState( {cardMode:null} );
@@ -139,6 +168,9 @@ class IShop extends React.Component {
           selectedGood={this.state.selectedGood}
           cardMode={this.state.cardMode}
           newGood={this.state.newGood}
+          goodNameEdit= {this.state.goodNameError} 
+          countEdit = {this.state.countEdit} urlEdit = {this.state.urlEdit}
+          priceEdit = {this.state.priceEdit}
         />
       );
       let cardGood = [];
@@ -155,9 +187,9 @@ class IShop extends React.Component {
         <Card key={v.code} editedGood = {this.state.editedGood} selectedGood = {this.state.selectedGood} cardMode = {this.state.cardMode}
                 goodName= {v.goodName} newGood={this.state.newGood} 
                 cbitemChanged = {this.itemChanged} cbSaved={this.goodSaved}                 
-                goodNameError = {this.state.goodNameError} goodNameError = {this.state.goodNameError} 
+                goodNameError = {this.state.goodNameError} 
                 countError = {this.state.countError} urlError = {this.state.urlError}
-                priceError = {this.state.priceError}
+                priceError = {this.state.priceError} 
                 count= {v.count} code={v.code} price={v.price} url={v.url}  cbCancel={this.EditModeCancel}
         />      
       )

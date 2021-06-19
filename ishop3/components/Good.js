@@ -17,20 +17,30 @@ class Good extends React.Component {
       selectedGood:PropTypes.number,
       editedGood:PropTypes.number,
       cardMode:PropTypes.number,
-      newGood: PropTypes.bool.isRequired,    
+      newGood: PropTypes.bool.isRequired,  
+      goodNameEdit: PropTypes.bool.isRequired,
+      priceEdit:PropTypes.bool.isRequired,
+      countEdit:PropTypes.bool.isRequired,
+      urlEdit:PropTypes.bool.isRequired,  
     };
     goodClicked = ()=> {
-      if(this.props.newGood == false){
+      if((this.props.newGood == true)||(this.props.goodNameEdit)||(this.props.priceEdit)||(this.props.urlEdit)||(this.props.countEdit)){
+      } else {
         this.props.cbSelected(this.props.code);
-      }      
+      }    
     }
     goodDeleted = (EO) => {      
       this.props.cbDeleted(this.props.code); 
       EO.stopPropagation();      
     }
-    goodEdited= (EO) => {      
-      this.props.cbEdited(this.props.code);
-      EO.stopPropagation();      
+    goodEdited= (EO) => { 
+      if((this.props.goodNameEdit)||(this.props.priceEdit)||(this.props.urlEdit)||(this.props.countEdit)) {
+
+      } else {
+        this.props.cbEdited(this.props.code);
+        EO.stopPropagation(); 
+      }    
+           
     }
     render() {     
       return  (

@@ -22,13 +22,19 @@ class Card extends React.Component {
       goodNameError: PropTypes.bool.isRequired,
       priceError:PropTypes.bool.isRequired,
       countError:PropTypes.bool.isRequired,
-      urlError:PropTypes.bool.isRequired
+      urlError:PropTypes.bool.isRequired,
     };
     
     itemChanged = (EO) => {      
       let errorName= EO.target.dataset.item ;        
       if(EO.target.value){        
         this.props.cbitemChanged(errorName, false);
+        if(EO.target.value == EO.target.defaultValue) {  
+          this.props.cbitemChanged(errorName, false ,false);
+        } else {
+          this.props.cbitemChanged(errorName, false , true);
+        };
+
       } else {
         this.props.cbitemChanged(errorName, true);
       };
