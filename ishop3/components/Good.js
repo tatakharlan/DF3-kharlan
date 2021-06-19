@@ -15,10 +15,14 @@ class Good extends React.Component {
       price: PropTypes.number.isRequired,
       url: PropTypes.string.isRequired,
       selectedGood:PropTypes.number,
-      editedGood:PropTypes.number,      
+      editedGood:PropTypes.number,
+      cardMode:PropTypes.number,
+      newGood: PropTypes.bool.isRequired,    
     };
     goodClicked = ()=> {
-      this.props.cbSelected(this.props.code);
+      if(this.props.newGood == false){
+        this.props.cbSelected(this.props.code);
+      }      
     }
     goodDeleted = (EO) => {      
       this.props.cbDeleted(this.props.code); 
@@ -36,8 +40,8 @@ class Good extends React.Component {
           <td>{this.props.count}</td>
           <td>{this.props.url}</td>
           <td> 
-            <input type="button" onClick= {this.goodEdited} value= 'Редактировать'  className="IShop-table-button"/>       
-            <input type="button" onClick= {this.goodDeleted} value= 'Удалить' className="IShop-table-button"/>
+            <input type="button" onClick= {this.goodEdited} value= 'Редактировать'  className="IShop-table-button" disabled={(this.props.newGood == true )&& "disabled"}/>       
+            <input type="button" onClick= {this.goodDeleted} value= 'Удалить' className="IShop-table-button" disabled={(this.props.cardMode == 2 )&& "disabled"}/>
           </td>
         </tr>
 

@@ -18,6 +18,7 @@ class Card extends React.Component {
       url: PropTypes.string,
       cbItemChanged:PropTypes.func,
       cbSaved:PropTypes.func.isRequired,
+      cbCancel:PropTypes.func.isRequired,
       goodNameError: PropTypes.bool.isRequired,
       priceError:PropTypes.bool.isRequired,
       countError:PropTypes.bool.isRequired,
@@ -53,31 +54,7 @@ class Card extends React.Component {
       this.props.cbSaved(data);
     }
     cancelEdit= ()=>{
-      if(this.props.newGood) {
-        let form = document.querySelector('.GoodsForm');        
-        for (let i=0; i < form.elements.length; i++) {                      
-            let elemName = form.elements[i].name; 
-            if(document.getElementsByName(elemName)[0]) {
-              document.getElementsByName(elemName)[0].value = null;  
-              this.props.cbitemChanged(elemName, true); 
-            }              
-        }
-      }else {
-        let form = document.querySelector('.GoodsForm');        
-        for (let i=0; i < form.elements.length; i++) {                      
-            let elemName = form.elements[i].name;
-            let elemValue = form.elements[i].value; 
-            let elemDefaultValue = form.elements[i].defaultValue;   
-            if(elemValue == elemDefaultValue ) {              
-            } else {
-              if(document.getElementsByName(elemName)[0]) {
-                document.getElementsByName(elemName)[0].value = elemDefaultValue;
-              }              
-            } 
-            this.props.cbitemChanged(elemName, false);                
-        }
-      }
-      
+      this.props.cbCancel();
     }
     render() {  
       
@@ -141,8 +118,8 @@ class Card extends React.Component {
                 </table>
               <div>
               <input type="hidden" defaultValue={((this.props.newGood == true)?Math.floor(Math.random()*1000):this.props.code)} name="code"/>
-
-              <button type="button" disabled= {((this.props.goodNameError == true)||(this.props.urlError == true)||(this.props.countError == true)||(this.props.priceError == true)&& "disabled")} onClick={this.saveGood}>Save</button>
+              
+              <button type="button" disabled= {((this.props.goodNameError == true)||(this.props.urlError == true)||(this.props.countError == true)||(this.props.priceError == true)&& "disabled")} onClick={this.saveGood}>{(this.props.newGood)?"Add":"Save"}</button>
               <button type="button" onClick={this.cancelEdit}>Cancel</button>
             </div>
             </form>

@@ -9,7 +9,7 @@ import Card from './Card';
 class IShop extends React.Component {
 
     static propTypes = {
-      code: PropTypes.number.isRequired,    
+         
       goods:PropTypes.arrayOf(
         PropTypes.shape({
           code: PropTypes.number.isRequired,
@@ -90,10 +90,8 @@ class IShop extends React.Component {
         }else {
           this.setState( { urlError: true });
         }
-      } 
-      
+      }       
     }
-
     addGood=()=>{
       this.setState( {newGood:true} );
       this.setState( {cardMode:2} );
@@ -108,7 +106,7 @@ class IShop extends React.Component {
       if(this.state.newGood == true) {        
         newArrGoods.push(data);
       }else {        
-        newArrGoods.forEach((element, index) => {
+        newArrGoods.forEach(element => {
           if(element.code == data.code) {            
             element.goodName = data.goodName;
             element.count = data.count;
@@ -117,10 +115,18 @@ class IShop extends React.Component {
           }
         });
       }
-      
+      if(this.state.newGood != true) {
+        this.setState( {cardMode:1} );
+      }else {
+        this.setState( {cardMode:null} );
+        this.setState( {newGood:false} );
+      }      
       this.setState( {ArrGood: newArrGoods} );
     }
-
+    EditModeCancel=()=> {
+      this.setState( {cardMode:null} );
+      this.setState( {newGood:false} );
+    }
 
     render() {
       let ArrGood = this.state.ArrGood;
@@ -132,6 +138,7 @@ class IShop extends React.Component {
           cbEdited={this.goodEdited}         
           selectedGood={this.state.selectedGood}
           cardMode={this.state.cardMode}
+          newGood={this.state.newGood}
         />
       );
       let cardGood = [];
@@ -151,7 +158,7 @@ class IShop extends React.Component {
                 goodNameError = {this.state.goodNameError} goodNameError = {this.state.goodNameError} 
                 countError = {this.state.countError} urlError = {this.state.urlError}
                 priceError = {this.state.priceError}
-                count= {v.count} code={v.code} price={v.price} url={v.url} 
+                count= {v.count} code={v.code} price={v.price} url={v.url}  cbCancel={this.EditModeCancel}
         />      
       )
       console.log("cardCode", cardCode);
@@ -170,7 +177,7 @@ class IShop extends React.Component {
             </thead>
             <tbody>{goodsCode}</tbody>            
           </table>
-          <input type="button" value="Add new good" onClick={this.addGood}/>
+          <input type="button" value="Add new good" onClick={this.addGood} disabled={(this.state.cardMode == 2)&& "disabled"}/>
           {
             ((this.state.cardMode)) &&
                 <div className="Card">
