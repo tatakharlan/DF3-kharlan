@@ -70,7 +70,7 @@ class IShop extends React.Component {
       if(item == "goodName")  {
         if(mode == false) {
           this.setState( { goodNameError: false });
-          if(ischanged == true) {
+          if(ischanged == true) {            
             this.setState( { goodNameEdit: true });
           }else{
             this.setState( { goodNameEdit: false });
@@ -128,7 +128,7 @@ class IShop extends React.Component {
     }
     goodSaved =(data)=> {
       let newArrGoods =  this.state.ArrGood.slice();
-      if(this.state.newGood == true) {        
+      if(this.state.newGood == true) { 
         newArrGoods.push(data);
       }else {        
         newArrGoods.forEach(element => {
@@ -155,6 +155,10 @@ class IShop extends React.Component {
     EditModeCancel=()=> {
       this.setState( {cardMode:null} );
       this.setState( {newGood:false} );
+      this.setState( {goodNameEdit:false} );
+      this.setState( {priceEdit:false} );
+      this.setState( {countEdit:false} );
+      this.setState( {urlEdit:false} );
     }
 
     render() {
@@ -168,7 +172,7 @@ class IShop extends React.Component {
           selectedGood={this.state.selectedGood}
           cardMode={this.state.cardMode}
           newGood={this.state.newGood}
-          goodNameEdit= {this.state.goodNameError} 
+          goodNameEdit= {this.state.goodNameEdit} 
           countEdit = {this.state.countEdit} urlEdit = {this.state.urlEdit}
           priceEdit = {this.state.priceEdit}
         />

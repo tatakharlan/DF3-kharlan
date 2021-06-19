@@ -34,13 +34,8 @@ class Good extends React.Component {
       EO.stopPropagation();      
     }
     goodEdited= (EO) => { 
-      if((this.props.goodNameEdit)||(this.props.priceEdit)||(this.props.urlEdit)||(this.props.countEdit)) {
-
-      } else {
         this.props.cbEdited(this.props.code);
-        EO.stopPropagation(); 
-      }    
-           
+        EO.stopPropagation();      
     }
     render() {     
       return  (
@@ -50,7 +45,7 @@ class Good extends React.Component {
           <td>{this.props.count}</td>
           <td>{this.props.url}</td>
           <td> 
-            <input type="button" onClick= {this.goodEdited} value= 'Редактировать'  className="IShop-table-button" disabled={(this.props.newGood == true )&& "disabled"}/>       
+            <input type="button" onClick= {this.goodEdited} value= 'Редактировать'  className="IShop-table-button" disabled={((this.props.newGood == true )||(this.props.goodNameEdit)||(this.props.priceEdit)||(this.props.urlEdit)||(this.props.countEdit))&& "disabled"}/>       
             <input type="button" onClick= {this.goodDeleted} value= 'Удалить' className="IShop-table-button" disabled={(this.props.cardMode == 2 )&& "disabled"}/>
           </td>
         </tr>

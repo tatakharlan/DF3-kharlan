@@ -27,11 +27,12 @@ class Card extends React.Component {
     
     itemChanged = (EO) => {      
       let errorName= EO.target.dataset.item ;        
-      if(EO.target.value){        
-        this.props.cbitemChanged(errorName, false);
-        if(EO.target.value == EO.target.defaultValue) {  
-          this.props.cbitemChanged(errorName, false ,false);
-        } else {
+      if(EO.target.value){  
+        console.log("EO.target.value",EO.target.value) ;
+        console.log("EO.target.defaultValue",EO.target.defaultValue) ;
+        if(EO.target.value == EO.target.defaultValue) { 
+          this.props.cbitemChanged(errorName, false , false);
+        } else {         
           this.props.cbitemChanged(errorName, false , true);
         };
 
@@ -45,11 +46,11 @@ class Card extends React.Component {
       
       let data = {};
       for (let i=0; i < form.elements.length; i++) {
-          console.log("element",form.elements[i]);
           let elemName = form.elements[i].name;
           let elemValue;
           if((elemName == "count")||(elemName == "price")||(elemName == "code")) {
             elemValue = parseInt(form.elements[i].value);
+            if(isNaN(elemValue)){elemValue = 0;}
           } else {
             elemValue = form.elements[i].value;
           }         
