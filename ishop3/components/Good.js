@@ -39,7 +39,7 @@ class Good extends React.Component {
     }
     render() {     
       return  (
-        <tr className= {((this.props.selectedGood == this.props.code)? "IShop-table-row_selected" : "")} key = {this.props.code} onClick= {this.goodClicked}>
+        <tr className= {(((this.props.selectedGood == this.props.code)||(this.props.editedGood == this.props.code))? "IShop-table-row_selected" : "")} key = {this.props.code} onClick= {this.goodClicked}>
           <td>{this.props.goodName}</td>
           <td>{this.props.price}</td>
           <td>{this.props.count}</td>

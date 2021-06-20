@@ -49,7 +49,8 @@ class IShop extends React.Component {
         let newArrGoods =  this.props.goods;    
         for(let i=0; i< newArrGoods.length; i++) {
           if(newArrGoods[i].code == code){
-            newArrGoods.splice(i,1);            
+            newArrGoods.splice(i,1); 
+            break;           
           }
         }
         this.setState( {ArrGood: newArrGoods} );        
