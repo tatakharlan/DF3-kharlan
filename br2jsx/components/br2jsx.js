@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './br2jsx.css';
 
 
-class IShop extends React.Component {
+class BR2JSX extends React.Component {
 
     static propTypes = {  
         text: PropTypes.string.isRequired,      
@@ -25,10 +25,10 @@ class IShop extends React.Component {
         />      
       )
       
-      return <BR2JSX text={text}/>;     
+      return;     
        
     }
   
   }
 
-  export default IShop;
+  export default BR2JSX;

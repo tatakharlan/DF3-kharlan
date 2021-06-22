@@ -3,16 +3,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import IShop from './components/IShop';
+import BR2JSX from './components/br2jsx';
 
-let shopTitle='iShop';
-let shopGoodsArr=require('./goods.json');
-
+let text="первый<br>второй<br>третий<br>последний";
 
 ReactDOM.render(
-  <IShop 
-    title={shopTitle}
-    goods={shopGoodsArr}
+  <BR2JSX 
+    text={text}
   />
   , document.getElementById('container') 
 );
