@@ -14,8 +14,9 @@ class BR2JSX extends React.Component {
     render() {
       let text = this.props.text;
       let textArr = text.split(/<br>|<br\/>|<br \/>/);
-      let textArrOut = textArr.map((item, index) => {
-        return <span>{item} <br/></span>;
+      let textArrOut = textArr.map((item, i) => {
+        return  <span key={i}>{item} {i != (textArr.length-1) ? <br/> : ''}</span>
+          
       })
       console.log("result",textArr);
 
