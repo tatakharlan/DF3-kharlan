@@ -1,0 +1,11 @@
+.BR2JSX {
+    background: #ccc;
+    color:#fff;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
