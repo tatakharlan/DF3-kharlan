@@ -7,24 +7,15 @@ import './br2jsx.css';
 class BR2JSX extends React.Component {
 
     static propTypes = {  
-        text: PropTypes.string.isRequired,      
+        text: PropTypes.string.isRequired
     };
+    handleClick(temp) {
+      let textArr = temp.split(/<br>|<br\/>|<br \/>/);     
+      return textArr.reduce((el, a) => (a == (textArr.length-1)?el.concat(a, ):el.concat(a,<br /> )), []);      
+    }
     
-    
-    render() {
-      let text = this.props.text;
-      let textArr = text.split(/<br>|<br\/>|<br \/>/);
-      let textArrOut = textArr.map((item, i) => {
-        return  <span key={i}>{item} {i != (textArr.length-1) ? <br/> : ''}</span>
-          
-      })
-      console.log("result",textArr);
-
-      return(
-        <div className='BR2JSX'>
-          {textArrOut}
-        </div>     
-       )
+    render() {      
+      return <div className= "BR2JSX">{this.handleClick(this.props.text)} </div>       
     }
   
   }
