@@ -11,7 +11,7 @@ class BR2JSX extends React.Component {
     };
     handleClick(temp) {
       let textArr = temp.split(/<br>|<br\/>|<br \/>/);     
-      return textArr.reduce((el, a) => (a == (textArr.length-1)?el.concat(a, ):el.concat(a,<br /> )), []);      
+      return textArr.reduce((el, a, index) =>( (index == (textArr.length-1))?el.concat(a, "" ):el.concat(a,<br key= {index}/> )), []);      
     }
     
     render() {      
