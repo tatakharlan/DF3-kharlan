@@ -10,7 +10,7 @@ class BR2JSX extends React.Component {
         text: PropTypes.string.isRequired
     };
     handleClick(temp) {
-      let textArr = temp.split(/<br>|<br\/>|<br \/>/);     
+      let textArr = temp.split(/<br *\/?>/);     
       return textArr.reduce((el, a, index) =>( (index == (textArr.length-1))?el.concat(a, "" ):el.concat(a,<br key= {index}/> )), []);      
     }
     
@@ -19,5 +19,18 @@ class BR2JSX extends React.Component {
     }
   
   }
+/*
 
+render() { 
+      let words = this.props.text.split(/<br *\/?>/);
+      let parts=[];
+      words.forEach((word, i) => {
+        if (i) {          
+          parts.push(<br>);
+          parts.push(word);
+        }
+        
+      });     
+      return <div className= "BR2JSX">{parts} </div>
+*/
   export default BR2JSX;
