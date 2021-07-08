@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import MobileClient from './MobileClient';
-
+import {mobileEvents} from './events';
 import './MobileCompany.css';
 
 class MobileCompany extends React.PureComponent {
@@ -16,6 +16,7 @@ class MobileCompany extends React.PureComponent {
         im: PropTypes.string.isRequired,
         otch: PropTypes.string.isRequired,
         balance: PropTypes.number.isRequired,
+        status:PropTypes.string.isRequired,
       })
     ),
   };
@@ -46,23 +47,26 @@ class MobileCompany extends React.PureComponent {
     } );
     if ( changed )
       this.setState({clients:newClients});
-  };
+  };  
   
-  setBalance1 = () => {
-    this.setBalance(105,230);
+  componentDidMount = () => {
+    mobileEvents.addListener('EAeditUser',this.id);
+    mobileEvents.addListener('EAdeleteUser',this.id);
   };
 
-  setBalance2 = () => {
-    this.setBalance(105,250);
+  componentWillUnmount = () => {
+    mobileEvents.removeListener('EAeditUser',this.id);
+    mobileEvents.removeListener('EAdeleteUser',this.id);
   };
-  
+
+
   render() {
 
     console.log("MobileCompany render");
 
     var clientsCode=this.state.clients.map( client => {
-        let FIO={fam:client.fam,im:client.im,otch:client.otch};
-        return <MobileClient key={client.id} id={client.id} FIO={FIO} balance={client.balance} />;
+        let info={fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
+        return <MobileClient key={client.id} id={client.id} info={info} />;
       }
     );
 
@@ -71,10 +75,28 @@ class MobileCompany extends React.PureComponent {
         <input type="button" value="=МТС" onClick={this.setName1} />
         <input type="button" value="=Velcom" onClick={this.setName2} />
         <div className='MobileCompanyName'>Компания &laquo;{this.state.name}&raquo;</div>
-        <div className='MobileCompanyClients'>
-          {clientsCode}
+        <div>
+          <input type="button" value="Все" onClick={this.showAll} />
+          <input type="button" value="Активные" onClick={this.showActive} />
+          <input type="button" value="Заблокированные" onClick={this.showBlock} />
         </div>
-        <input type="button" value="Сидоров=230" onClick={this.setBalance1} />        
+        <table>
+          <thead>
+          <tr>
+            <th>фамилия</th>
+            <th>имя</th>
+            <th>отчетство</th>
+            <th>баланс</th>
+            <th>статус</th>
+            <th></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          {clientsCode}
+          </tbody>
+          </table>
+        <input type="button" value="Добавить" onClick={this.addUser} />        
       </div>
     )
     ;
