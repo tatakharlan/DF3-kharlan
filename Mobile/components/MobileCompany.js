@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import MobileClient from './MobileClient';
+import Card from './Card';
 import {mobileEvents} from './events';
 import './MobileCompany.css';
 
@@ -24,6 +25,7 @@ class MobileCompany extends React.PureComponent {
   state = {
     name: this.props.name,
     clients: this.props.clients,
+    editMode: false,
   };
 
   setName1 = () => {
@@ -50,16 +52,32 @@ class MobileCompany extends React.PureComponent {
   };  
   
   componentDidMount = () => {
-    mobileEvents.addListener('EAeditUser',this.id);
-    mobileEvents.addListener('EAdeleteUser',this.id);
+    mobileEvents.addListener('EAeditUser',this.mobileEdited);
+    mobileEvents.addListener('EAdeleteUser',this.mobileDeleted);
   };
 
   componentWillUnmount = () => {
-    mobileEvents.removeListener('EAeditUser',this.id);
-    mobileEvents.removeListener('EAdeleteUser',this.id);
+    mobileEvents.removeListener('EAeditUser',this.mobileEdited);
+    mobileEvents.removeListener('EAdeleteUser',this.mobileDeleted);
   };
-
-
+  mobileEdited = (id) => {
+    let newClients=[...this.state.clients]; 
+    newClients.forEach( (c,i) => {
+      if ( c.id==id) {
+        let editClient={...c};        
+      }
+    });
+    this.setState({editMode:true});
+  }
+  mobileDeleted= (id) => {
+    let newClients=[...this.state.clients]; 
+    newClients.forEach( (c,i) => {
+      if ( c.id==id) {
+        newClients.splice(i, 1) ;       
+      }
+    });
+    this.setState({clients:newClients});
+  }
   render() {
 
     console.log("MobileCompany render");
@@ -70,6 +88,24 @@ class MobileCompany extends React.PureComponent {
       }
     );
 
+    let cardClient = [];
+    let newClients=[...this.state.clients];
+      if(this.state.editMode) {
+        cardClient = newClients.filter( v =>  (v.id == this.state.editedGood));
+      } 
+      if (this.state.newGood == true) {
+        cardClient = [{goodName: "",code:null,count:null, price: null, url: ""}]        
+      }
+    let cardCode = cardClient.map( v =>
+      <Card key={v.code} editedGood = {this.state.editedGood} selectedGood = {this.state.selectedGood} cardMode = {this.state.cardMode}
+              goodName= {v.goodName} newGood={this.state.newGood} 
+              cbitemChanged = {this.itemChanged} cbSaved={this.goodSaved}                 
+              goodNameError = {this.state.goodNameError} 
+              countError = {this.state.countError} urlError = {this.state.urlError}
+              priceError = {this.state.priceError} 
+              count= {v.count} code={v.code} price={v.price} url={v.url}  cbCancel={this.EditModeCancel}
+      />      
+    )
     return (
       <div className='MobileCompany'>
         <input type="button" value="=МТС" onClick={this.setName1} />
@@ -96,7 +132,14 @@ class MobileCompany extends React.PureComponent {
           {clientsCode}
           </tbody>
           </table>
-        <input type="button" value="Добавить" onClick={this.addUser} />        
+        <input type="button" value="Добавить" onClick={this.addUser} />  
+        {
+            ((this.state.editMode)) &&
+                <div className="Card">                  
+                  {cardCode}                  
+                </div>
+          }
+
       </div>
     )
     ;
