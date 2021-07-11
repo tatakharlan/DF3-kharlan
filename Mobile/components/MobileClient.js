@@ -21,15 +21,6 @@ class MobileClient extends React.PureComponent {
     
   };
 
-  state = {
-    info: this.props.info,
-  };
-
-  componentWillReceiveProps = (newProps) => {
-    //console.log("MobileClient id="+this.props.id+" componentWillReceiveProps");
-    this.setState({info:newProps.info});
-  };
-
   editUser = (EO) => {     
     mobileEvents.emit('EAeditUser',this.props.id);
   }
@@ -38,18 +29,15 @@ class MobileClient extends React.PureComponent {
   }
 
   render() {
-
-    console.log("MobileClient id="+this.props.id+" render");
-    
-    return ( 
-      !(((this.props.dBlock)&&(this.state.info.status == "active")) || ((this.props.dActive)&&(this.state.info.status == "block")))&&      
-         
-          <tr >
-            <td>{this.state.info.fam}</td>
-            <td>{this.state.info.im}</td>
-            <td>{this.state.info.otch}</td>
-            <td>{this.state.info.balance}</td>
-            <td>{this.state.info.status}</td>
+    console.log("MobileClient id="+this.props.id+" render");    
+    return (          
+      !(((this.props.dBlock)&&(this.props.info.status == "active")) || ((this.props.dActive)&&(this.props.info.status == "block")))&&    
+          <tr>
+            <td>{this.props.info.fam}</td>
+            <td>{this.props.info.im}</td>
+            <td>{this.props.info.otch}</td>
+            <td>{this.props.info.balance}</td>
+            <td>{this.props.info.status}</td>
             <td><input type="button" value="Редактировать" onClick={this.editUser} /></td>
             <td><input type="button" value="Удалить" onClick={this.deleteUser} /></td>
           </tr>

@@ -39,21 +39,6 @@ class MobileCompany extends React.PureComponent {
     this.setState({name:'Velcom'});
   };
   
-  setBalance = (clientId,newBalance) => {
-    let changed=false;
-    let newClients=[...this.state.clients]; // копия самого массива клиентов
-    newClients.forEach( (c,i) => {
-      if ( c.id==clientId && c.balance!=newBalance ) {
-        let newClient={...c}; // копия хэша изменившегося клиента
-        newClient.balance=newBalance;
-        newClients[i]=newClient;
-        changed=true;
-      }
-    } );
-    if ( changed )
-      this.setState({clients:newClients});
-  };  
-  
   componentDidMount = () => {
     mobileEvents.addListener('EAeditUser',this.mobileEdited);
     mobileEvents.addListener('EAdeleteUser',this.mobileDeleted);
@@ -110,9 +95,7 @@ class MobileCompany extends React.PureComponent {
     var clientsCode=this.state.clients.map( client => {
         return <MobileClient key={client.id} id={client.id} info={client} dActive={this.state.dActive} dBlock={this.state.dBlock}/>;
       }
-    );
-
-    
+    );    
       let newClients=[...this.state.clients];
       let editClient = [];
       if(this.state.editedClient) {
@@ -126,13 +109,9 @@ class MobileCompany extends React.PureComponent {
         editClient[0].id = Math.floor(Math.random()*1000); 
       }
       let cardCode = editClient.map( client => {
-        let info={id:client.id,fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
-        return <Card key={client.id} id= {client.id} newClient = {this.state.newClient} info={info}  editedClient = {this.state.editedClient} /> 
+        return <Card key={client.id} id= {client.id} newClient = {this.state.newClient} info={client}  editedClient = {this.state.editedClient} /> 
       }
-      )
-      
-           
-    
+      )  
     return (
       <div className='MobileCompany'>
         <input type="button" value="=МТС" onClick={this.setName1} />
