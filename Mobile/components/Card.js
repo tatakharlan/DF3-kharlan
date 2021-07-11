@@ -10,6 +10,7 @@ class Card extends React.PureComponent {
       cardMode:PropTypes.number,
       editedClient:PropTypes.number, 
       newClient:PropTypes.bool,
+      id: PropTypes.number,
       info: PropTypes.shape({
         id: PropTypes.number,
         fam: PropTypes.string,
