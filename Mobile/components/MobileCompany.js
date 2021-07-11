@@ -23,9 +23,10 @@ class MobileCompany extends React.PureComponent {
   };
 
   state = {
-    name: this.props.name,
     clients: this.props.clients,
-    editMode: false,
+    newClient: false,
+    editedClient: null,
+    name: this.props.name,
   };
 
   setName1 = () => {
@@ -54,21 +55,27 @@ class MobileCompany extends React.PureComponent {
   componentDidMount = () => {
     mobileEvents.addListener('EAeditUser',this.mobileEdited);
     mobileEvents.addListener('EAdeleteUser',this.mobileDeleted);
+    mobileEvents.addListener('EAasaveUser',this.mobileSave);
   };
 
   componentWillUnmount = () => {
     mobileEvents.removeListener('EAeditUser',this.mobileEdited);
     mobileEvents.removeListener('EAdeleteUser',this.mobileDeleted);
+    mobileEvents.addListener('EAasaveUser',this.mobileSave);
   };
   mobileEdited = (id) => {
-    let newClients=[...this.state.clients]; 
-    newClients.forEach( (c,i) => {
-      if ( c.id==id) {
-        let editClient={...c};        
-      }
-    });
-    this.setState({editMode:true});
+    this.setState({editedClient: id});
   }
+  mobileSave = (nci) => {    
+    let index = this.state.clients.findIndex(client => client.id==nci.id);
+    let newClients=[...this.state.clients]; 
+    if(index !==-1){  
+      newClients[index] =nci;
+    }else {
+      newClients.push(nci);
+    }
+    this.setState({clients: newClients});
+  }  
   mobileDeleted= (id) => {
     let newClients=[...this.state.clients]; 
     newClients.forEach( (c,i) => {
@@ -77,6 +84,24 @@ class MobileCompany extends React.PureComponent {
       }
     });
     this.setState({clients:newClients});
+  }
+  showAll =  () => {
+    let newClients=[...this.props.clients];
+    this.setState({clients:newClients});
+  }
+  showActive =  () => {
+    let newClients=[...this.props.clients];
+    let filteredClients = newClients.filter(client =>client.status == "active" );
+    this.setState({clients:filteredClients});
+  }
+  showBlock =  () => {
+    let newClients=[...this.props.clients];
+    let filteredClients = newClients.filter(client =>client.status == "block" );
+    this.setState({clients:filteredClients});
+  }
+  addUser = () => {
+    this.setState({editedClient:null});
+    this.setState({newClient:true});
   }
   render() {
 
@@ -88,24 +113,27 @@ class MobileCompany extends React.PureComponent {
       }
     );
 
-    let cardClient = [];
-    let newClients=[...this.state.clients];
-      if(this.state.editMode) {
-        cardClient = newClients.filter( v =>  (v.id == this.state.editedGood));
-      } 
-      if (this.state.newGood == true) {
-        cardClient = [{goodName: "",code:null,count:null, price: null, url: ""}]        
+    
+      let newClients=[...this.state.clients];
+      let editClient = [];
+      if(this.state.editedClient) {
+        editClient = newClients.filter(client=>client.id == this.state.editedClient );
+      }else {
+        let editClientVal = newClients[0];
+        for(let key in editClient) {
+          editClientVal[key] = "";
+        }
+        editClient = [{editClientVal}];
+        editClient[0].id = Math.floor(Math.random()*1000); 
       }
-    let cardCode = cardClient.map( v =>
-      <Card key={v.code} editedGood = {this.state.editedGood} selectedGood = {this.state.selectedGood} cardMode = {this.state.cardMode}
-              goodName= {v.goodName} newGood={this.state.newGood} 
-              cbitemChanged = {this.itemChanged} cbSaved={this.goodSaved}                 
-              goodNameError = {this.state.goodNameError} 
-              countError = {this.state.countError} urlError = {this.state.urlError}
-              priceError = {this.state.priceError} 
-              count= {v.count} code={v.code} price={v.price} url={v.url}  cbCancel={this.EditModeCancel}
-      />      
-    )
+      let cardCode = editClient.map( client => {
+        let info={id: client.id,fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
+        return <Card key={client.id} newClient = {this.state.newClient} info={info}  editedClient = {this.state.editedClient} /> 
+      }
+      )
+      
+           
+    
     return (
       <div className='MobileCompany'>
         <input type="button" value="=МТС" onClick={this.setName1} />
@@ -134,7 +162,7 @@ class MobileCompany extends React.PureComponent {
           </table>
         <input type="button" value="Добавить" onClick={this.addUser} />  
         {
-            ((this.state.editMode)) &&
+            ((this.state.newClient)||(this.state.editedClient)) &&
                 <div className="Card">                  
                   {cardCode}                  
                 </div>

@@ -1,137 +1,107 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import {mobileEvents} from './events';
 
 
-
-class Card extends React.Component {
+class Card extends React.PureComponent {
   
     static propTypes = {
       cardMode:PropTypes.number,
-      editedGood:PropTypes.number,  
-      selectedGood:PropTypes.number, 
-      newGood: PropTypes.bool.isRequired, 
-      code: PropTypes.number,
-      goodName: PropTypes.string,
-      count: PropTypes.number,
-      price: PropTypes.number,
-      url: PropTypes.string,
-      cbItemChanged:PropTypes.func,
-      cbSaved:PropTypes.func.isRequired,
-      cbCancel:PropTypes.func.isRequired,
-      goodNameError: PropTypes.bool.isRequired,
-      priceError:PropTypes.bool.isRequired,
-      countError:PropTypes.bool.isRequired,
-      urlError:PropTypes.bool.isRequired,
+      editedClient:PropTypes.number, 
+      newClient:PropTypes.bool,
+      info: PropTypes.shape({
+        id: PropTypes.number,
+        fam: PropTypes.string,
+        im: PropTypes.string,
+        otch: PropTypes.string,
+        balance: PropTypes.number,
+        status: PropTypes.string,
+      })
     };
-    
-    itemChanged = (EO) => {      
-      let errorName= EO.target.dataset.item ;        
-      if(EO.target.value){  
-        console.log("EO.target.value",EO.target.value) ;
-        console.log("EO.target.defaultValue",EO.target.defaultValue) ;
-        if(EO.target.value == EO.target.defaultValue) { 
-          this.props.cbitemChanged(errorName, false , false);
-        } else {         
-          this.props.cbitemChanged(errorName, false , true);
-        };
 
-      } else {
-        this.props.cbitemChanged(errorName, true);
-      };
-      
+    NewFamRef = null;
+    setNewFamRef = (ref) => {
+      this.NewFamRef=ref;
+    }; 
+    NewImRef = null;
+    setNewImRef = (ref) => {
+      this.NewImRef=ref;
+    };
+    NewOtchRef =null;
+    setNewOtchRef= (ref) => {
+      this.NewOtchRef=ref;
+    };
+    NewBalanceRef =null;
+    setNewBalanceRef= (ref) => {
+      this.NewBalanceRef=ref;
+    };
+    NewStatusRef =null;
+    setNewStatusRef= (ref) => {
+      this.NewStatusRef=ref;
+    };
+
+    saveClient = ()=>{
+      let newClientInfo= {
+        ...this.props.info,
+        id : this.props.info.id,
+        fam : this.NewFamRef.value,
+        im : this.NewImRef.value,
+        otch : this.NewOtchRef.value,
+        status : this.NewStatusRef.value,
+        balance : parseInt(this.NewBalanceRef.value)
+      } 
+      if(isNaN(newClientInfo.balance) ) {
+        newClientInfo.balance = 0;
+      }
+      mobileEvents.emit('EAasaveUser',newClientInfo);
     }
-    saveGood = ()=>{
-      let form = document.querySelector('.GoodsForm');
+
+    render() {     
       
-      let data = {};
-      for (let i=0; i < form.elements.length; i++) {
-          let elemName = form.elements[i].name;
-          let elemValue;
-          if((elemName == "count")||(elemName == "price")||(elemName == "code")) {
-            elemValue = parseInt(form.elements[i].value);
-            if(isNaN(elemValue)){elemValue = 0;}
-          } else {
-            elemValue = form.elements[i].value;
-          }         
-          if(elemName != "") {            
-            data[elemName] = elemValue; 
-          }                 
-      }      
-      this.props.cbSaved(data);
-    }
-    cancelEdit= ()=>{
-      this.props.cbCancel();
-    }
-    render() {  
-      
-      if(this.props.cardMode == 1) {
         return  (
-          <table className="IShop-card"> 
-          <tbody> 
-            <tr>
-                <td>goodName</td>
-                <td>{this.props.goodName}</td>
-            </tr>
-            <tr>
-                <td>price</td>
-                <td>{this.props.price}</td>
-            </tr> 
-            <tr>
-                <td>count</td>
-                <td>{this.props.count}</td>
-            </tr>
-            <tr>
-                <td>url</td>
-                <td>{this.props.url}</td>
-            </tr> 
-          </tbody>
-          </table>
-        )
-      }else {
-        return  (
-            <form className="GoodsForm">
+          <div>
               <table className="IShop-card">
                   <tbody> 
                         <tr>
-                            <td>goodName</td>
+                            <td>fam</td>
                             <td>
-                              <input type="text" defaultValue={this.props.goodName} name="goodName" onChange={this.itemChanged} data-item="goodName"/>
-                              <label className= {((this.props.goodNameError == true)?"IShop-card_error visible_error":"IShop-card_error")} >goodName is required</label>
+                              <input type="text" defaultValue={this.props.info.fam} name="fam" ref={this.setNewFamRef}/>
                             </td>                           
                         </tr>
                         <tr>
-                            <td>price</td>
+                            <td>im</td>
                             <td>
-                              <input type="text" defaultValue={this.props.price} name="price" onChange={this.itemChanged} data-item="price"/>
-                              <label className= {((this.props.priceError == true)?"IShop-card_error visible_error":"IShop-card_error")} >price is required</label>
+                              <input type="text" defaultValue={this.props.info.im} name="im" ref={this.setNewImRef}/>
                             </td>
                         </tr> 
                         <tr>
-                            <td>count</td>
+                            <td>otch</td>
                             <td>
-                              <input type="text" defaultValue={this.props.count} name="count" onChange={this.itemChanged} data-item="count"/>
-                              <label className= {((this.props.countError == true)?"IShop-card_error visible_error":"IShop-card_error")} >count is required</label>
+                            <input type="text" defaultValue={this.props.info.otch} name="otch" ref={this.setNewOtchRef}/>
                             </td>
                         </tr>
                         <tr>
-                            <td>url</td>
+                            <td>balance</td>
                             <td>
-                              <input type="text" defaultValue={this.props.url} name="url" onChange={this.itemChanged} data-item="url"/>
-                              <label className= {((this.props.urlError == true)?"IShop-card_error visible_error":"IShop-card_error")}>url is required</label>
+                            <input type="text" defaultValue={this.props.info.balance} name="balance" ref={this.setNewBalanceRef}/>                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>status</td>
+                            <td>
+                            <input type="text" defaultValue={this.props.info.status} name="status" ref={this.setNewStatusRef}/>                            
                             </td>
                         </tr>
                   </tbody>
                 </table>
               <div>
-              <input type="hidden" defaultValue={((this.props.newGood == true)?Math.floor(Math.random()*1000):this.props.code)} name="code"/>
+              <button type="button" onClick={this.saveClient}>{(this.props.newGood)?"Add":"Save"}</button>
               
-              <button type="button" disabled= {((this.props.goodNameError == true)||(this.props.urlError == true)||(this.props.countError == true)||(this.props.priceError == true)&& "disabled")} onClick={this.saveGood}>{(this.props.newGood)?"Add":"Save"}</button>
-              <button type="button" onClick={this.cancelEdit}>Cancel</button>
             </div>
-            </form>
+            </div>
         )
-      }
+      
 
     }
 
