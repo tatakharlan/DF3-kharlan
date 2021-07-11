@@ -108,7 +108,7 @@ class MobileCompany extends React.PureComponent {
     console.log("MobileCompany render");
 
     var clientsCode=this.state.clients.map( client => {
-        let info={fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
+        let info={id:client.id, fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
         return <MobileClient key={client.id} id={client.id} info={info} dActive={this.state.dActive} dBlock={this.state.dBlock}/>;
       }
     );
@@ -127,8 +127,8 @@ class MobileCompany extends React.PureComponent {
         editClient[0].id = Math.floor(Math.random()*1000); 
       }
       let cardCode = editClient.map( client => {
-        let info={id: client.id,fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
-        return <Card key={client.id} newClient = {this.state.newClient} info={info}  editedClient = {this.state.editedClient} /> 
+        let info={id:client.id,fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
+        return <Card key={client.id} id= {client.id} newClient = {this.state.newClient} info={info}  editedClient = {this.state.editedClient} /> 
       }
       )
       

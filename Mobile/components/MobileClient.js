@@ -11,6 +11,7 @@ class MobileClient extends React.PureComponent {
     dBlock:  PropTypes.bool,
     dActive:  PropTypes.bool,
     info: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       fam: PropTypes.string.isRequired,
       im: PropTypes.string.isRequired,
       otch: PropTypes.string.isRequired,
