@@ -29,7 +29,6 @@ class MobileCompany extends React.PureComponent {
     name: this.props.name,
     dActive: false,
     dBlock: false,
-    dAll: true,
   };
 
   setName1 = () => {
@@ -110,7 +109,7 @@ class MobileCompany extends React.PureComponent {
 
     var clientsCode=this.state.clients.map( client => {
         let info={fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
-        return <MobileClient key={client.id} id={client.id} info={info} dActive={this.state.dActive} dBlock={this.state.dBlock} dAll={this.state.dAll}/>;
+        return <MobileClient key={client.id} id={client.id} info={info} dActive={this.state.dActive} dBlock={this.state.dBlock}/>;
       }
     );
 
