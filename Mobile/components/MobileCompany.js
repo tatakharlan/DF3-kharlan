@@ -27,6 +27,9 @@ class MobileCompany extends React.PureComponent {
     newClient: false,
     editedClient: null,
     name: this.props.name,
+    dActive: false,
+    dBlock: false,
+    dAll: true,
   };
 
   setName1 = () => {
@@ -86,18 +89,16 @@ class MobileCompany extends React.PureComponent {
     this.setState({clients:newClients});
   }
   showAll =  () => {
-    let newClients=[...this.props.clients];
-    this.setState({clients:newClients});
+    this.setState({dBlock: false});
+    this.setState({dActive: false});
   }
   showActive =  () => {
-    let newClients=[...this.props.clients];
-    let filteredClients = newClients.filter(client =>client.status == "active" );
-    this.setState({clients:filteredClients});
+    this.setState({dBlock: false});
+    this.setState({dActive: true});
   }
   showBlock =  () => {
-    let newClients=[...this.props.clients];
-    let filteredClients = newClients.filter(client =>client.status == "block" );
-    this.setState({clients:filteredClients});
+    this.setState({dBlock: true});
+    this.setState({dActive: false});
   }
   addUser = () => {
     this.setState({editedClient:null});
@@ -109,7 +110,7 @@ class MobileCompany extends React.PureComponent {
 
     var clientsCode=this.state.clients.map( client => {
         let info={fam:client.fam,im:client.im,otch:client.otch, balance: client.balance, status:client.status};
-        return <MobileClient key={client.id} id={client.id} info={info} />;
+        return <MobileClient key={client.id} id={client.id} info={info} dActive={this.state.dActive} dBlock={this.state.dBlock} dAll={this.state.dAll}/>;
       }
     );
 

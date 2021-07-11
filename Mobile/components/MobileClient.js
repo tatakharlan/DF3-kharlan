@@ -8,6 +8,9 @@ class MobileClient extends React.PureComponent {
 
   static propTypes = {
     id: PropTypes.number.isRequired,
+    dBlock:  PropTypes.bool,
+    dActive:  PropTypes.bool,
+    dAll:  PropTypes.bool,
     info: PropTypes.shape({
       fam: PropTypes.string.isRequired,
       im: PropTypes.string.isRequired,
@@ -38,8 +41,10 @@ class MobileClient extends React.PureComponent {
 
     console.log("MobileClient id="+this.props.id+" render");
     
-    return (            
-          <tr className='MobileClient'>
+    return ( 
+      !(((this.props.dBlock)&&(this.state.info.status == "active")) || ((this.props.dActive)&&(this.state.info.status == "block"))) &&        
+         
+          <tr >
             <td>{this.state.info.fam}</td>
             <td>{this.state.info.im}</td>
             <td>{this.state.info.otch}</td>
