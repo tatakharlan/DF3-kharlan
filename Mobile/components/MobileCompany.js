@@ -71,28 +71,28 @@ class MobileCompany extends React.PureComponent {
     this.setState({clients:newClients});
   }
   showAll =  () => {
-    let newClients=[...this.props.clients];
-    this.setState({clients:newClients});
+    this.setState({dBlock: false});
+    this.setState({dActive: false});
   }
   showActive =  () => {
-    let newClients=[...this.props.clients];
-    let filterClients = newClients.filter(client => client.status == "active");
-    this.setState({clients:filterClients});
+    this.setState({dBlock: false});
+    this.setState({dActive: true});
   }
   showBlock =  () => {
-    let newClients=[...this.props.clients];
-    let filterClients = newClients.filter(client => client.status == "block");
-    this.setState({clients:filterClients});
+    this.setState({dBlock: true});
+    this.setState({dActive: false});
   }
   addUser = () => {
-    this.setState({clients:newClients});
+    this.setState({editedClient:null});
+    this.setState({newClient:true});
   }
   render() {
 
     console.log("MobileCompany render");
 
     var clientsCode=this.state.clients.map( client => {
-        return <MobileClient key={client.id} id={client.id} info={client}/>;
+      return !(((this.state.dBlock)&&(client.status == "active")) || ((this.state.dActive)&&(client.status == "block")))&&
+         <MobileClient key={client.id} id={client.id} info={client}/>;
       }
     );    
       let newClients=[...this.state.clients];

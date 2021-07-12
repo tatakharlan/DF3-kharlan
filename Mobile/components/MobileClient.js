@@ -28,9 +28,9 @@ class MobileClient extends React.PureComponent {
   }
 
   render() {
-    console.log("MobileClient id="+this.props.id+" render"); 
-
-    return (     
+    console.log("MobileClient id="+this.props.id+" render");    
+    return (          
+          
           <tr>
             <td>{this.props.info.fam}</td>
             <td>{this.props.info.im}</td>
