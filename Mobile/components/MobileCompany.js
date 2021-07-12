@@ -27,8 +27,6 @@ class MobileCompany extends React.PureComponent {
     newClient: false,
     editedClient: null,
     name: this.props.name,
-    dActive: false,
-    dBlock: false,
   };
 
   setName1 = () => {
@@ -73,27 +71,28 @@ class MobileCompany extends React.PureComponent {
     this.setState({clients:newClients});
   }
   showAll =  () => {
-    this.setState({dBlock: false});
-    this.setState({dActive: false});
+    let newClients=[...this.props.clients];
+    this.setState({clients:newClients});
   }
   showActive =  () => {
-    this.setState({dBlock: false});
-    this.setState({dActive: true});
+    let newClients=[...this.props.clients];
+    let filterClients = newClients.filter(client => client.status == "active");
+    this.setState({clients:filterClients});
   }
   showBlock =  () => {
-    this.setState({dBlock: true});
-    this.setState({dActive: false});
+    let newClients=[...this.props.clients];
+    let filterClients = newClients.filter(client => client.status == "block");
+    this.setState({clients:filterClients});
   }
   addUser = () => {
-    this.setState({editedClient:null});
-    this.setState({newClient:true});
+    this.setState({clients:newClients});
   }
   render() {
 
     console.log("MobileCompany render");
 
     var clientsCode=this.state.clients.map( client => {
-        return <MobileClient key={client.id} id={client.id} info={client} dActive={this.state.dActive} dBlock={this.state.dBlock}/>;
+        return <MobileClient key={client.id} id={client.id} info={client}/>;
       }
     );    
       let newClients=[...this.state.clients];
@@ -135,7 +134,7 @@ class MobileCompany extends React.PureComponent {
           </tr>
           </thead>
           <tbody>
-          {clientsCode}
+          {clientsCode}          
           </tbody>
           </table>
         <input type="button" value="Добавить" onClick={this.addUser} />  

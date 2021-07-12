@@ -8,8 +8,6 @@ class MobileClient extends React.PureComponent {
 
   static propTypes = {
     id: PropTypes.number.isRequired,
-    dBlock:  PropTypes.bool,
-    dActive:  PropTypes.bool,
     info: PropTypes.shape({
       id: PropTypes.number.isRequired,
       fam: PropTypes.string.isRequired,
@@ -21,6 +19,7 @@ class MobileClient extends React.PureComponent {
     
   };
 
+  
   editUser = (EO) => {     
     mobileEvents.emit('EAeditUser',this.props.id);
   }
@@ -29,9 +28,9 @@ class MobileClient extends React.PureComponent {
   }
 
   render() {
-    console.log("MobileClient id="+this.props.id+" render");    
-    return (          
-      !(((this.props.dBlock)&&(this.props.info.status == "active")) || ((this.props.dActive)&&(this.props.info.status == "block")))&&    
+    console.log("MobileClient id="+this.props.id+" render"); 
+
+    return (     
           <tr>
             <td>{this.props.info.fam}</td>
             <td>{this.props.info.im}</td>
