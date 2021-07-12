@@ -27,6 +27,8 @@ class MobileCompany extends React.PureComponent {
     newClient: false,
     editedClient: null,
     name: this.props.name,
+    dBlock:false,
+    dActive: false,
   };
 
   setName1 = () => {
@@ -91,7 +93,7 @@ class MobileCompany extends React.PureComponent {
     console.log("MobileCompany render");
 
     var clientsCode=this.state.clients.map( client => {
-      return !(((this.state.dBlock)&&(client.status == "active")) || ((this.state.dActive)&&(client.status == "block")))&&
+      return (((this.state.dBlock)&&(client.status == "block")) || ((this.state.dActive)&&(client.status == "active")) || ((!(this.state.dActive)&&(!(this.state.dBlock)))) )&&
          <MobileClient key={client.id} id={client.id} info={client}/>;
       }
     );    
