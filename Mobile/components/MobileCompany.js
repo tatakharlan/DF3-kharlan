@@ -60,8 +60,9 @@ class MobileCompany extends React.PureComponent {
       newClients[index] =nci;
     }else {
       newClients.push(nci);
+      this.setState({newClient: false});
     }
-    this.setState({clients: newClients});
+    this.setState({clients: newClients});    
   }  
   mobileDeleted= (id) => {
     let newClients=[...this.state.clients]; 
@@ -107,7 +108,7 @@ class MobileCompany extends React.PureComponent {
           editClientVal[key] = "";
         }
         editClient = [{editClientVal}];
-        editClient[0].id = Math.floor(Math.random()*1000); 
+        editClient[0].id = parseInt(Math.max(...newClients.map(user => user.id)) + 1);         
       }
       let cardCode = editClient.map( client => {
         return <Card key={client.id} id= {client.id} newClient = {this.state.newClient} info={client}  editedClient = {this.state.editedClient} /> 
