@@ -42,7 +42,7 @@ class Scales {
         let _sumScale = 0;   
        
         this.products.forEach(function(prod){
-            let scale = Object.getOwnPropertyDescriptor(prod,Object.getOwnPropertyNames(prod)[1]).value;
+            let scale = Object.getOwnPropertyDescriptor(prod,"scale").value;
             _sumScale = _sumScale + scale;            
         })
         return _sumScale;
@@ -51,7 +51,7 @@ class Scales {
         let nameList:Array<string> = [];  
 
         this.products.forEach(function(prod){
-            let name = Object.getOwnPropertyDescriptor(prod,Object.getOwnPropertyNames(prod)[0]).value;
+            let name = Object.getOwnPropertyDescriptor(prod,"name").value;
             nameList.push(name);            
         })
         return nameList;
