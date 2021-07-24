@@ -9,12 +9,12 @@ class Product {
         this.scale= _scale; 
     }
 
-    getScale(_scale:number):void {
-        this.scale=_scale;
+    getScale():number {
+        return this.scale;
     }
 
-    getName(_name:string):void {
-        this.name=_name;
+    getName():string {
+        return this.name;
     }
     
 }
@@ -39,8 +39,8 @@ class Scales {
     getSumScale():number {        
         let _sumScale = 0;   
        
-        this.products.forEach(function(prod){
-            let scale = Object.getOwnPropertyDescriptor(prod,"scale").value;
+        this.products.forEach(function(prod:Product){
+            let scale:number = prod.getScale();
             _sumScale = _sumScale + scale;            
         })
         return _sumScale;
@@ -48,8 +48,8 @@ class Scales {
     getNameList():Array<string> { 
         let nameList:Array<string> = [];  
 
-        this.products.forEach(function(prod){
-            let name = Object.getOwnPropertyDescriptor(prod,"name").value;
+        this.products.forEach(function(prod:Product){
+            let name:string = prod.getName();
             nameList.push(name);            
         })
         return nameList;
