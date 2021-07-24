@@ -26,19 +26,17 @@ class Tomato extends Product {
 }
 class Scales {
 
-    products: Array<object>;      
-    
+    products: Array<Product>;          
 
-    constructor(_products:Array<object>) {              
-        this.products = _products;
-        
+    constructor() {
+        this.products =[];   
     }
 
-    add(_product:object):void {
+    add(_product:Product):void {
         this.products.push(_product);
     }
 
-    getSumScale(_products: Array<object>):number {        
+    getSumScale():number {        
         let _sumScale = 0;   
        
         this.products.forEach(function(prod){
@@ -47,7 +45,7 @@ class Scales {
         })
         return _sumScale;
     }
-    getNameList(_products: Array<object>):Array<string> { 
+    getNameList():Array<string> { 
         let nameList:Array<string> = [];  
 
         this.products.forEach(function(prod){
@@ -57,35 +55,27 @@ class Scales {
         return nameList;
     }
 }
-let apple1:Product=new Product("Apple1",125);
-let apple2:Product=new Product("Apple2",225);
-let tomato1:Product=new Product("tomato1",125);
-let tomato2:Product=new Product("tomato2",225);
-
-console.log( apple1 );
-console.log( apple2 );
-console.log( tomato1 );
-console.log( tomato2 );
-
-let product_arr = [];
-
-product_arr.push(apple1);
-product_arr.push(apple2);
-product_arr.push(tomato1);
-product_arr.push(tomato2);
-
-let scales:Scales=new Scales(product_arr);
-
-scales.add(apple1);
-scales.add(apple2);
-let sumscale = scales.getSumScale(product_arr);
-let numList = scales.getNameList(product_arr);
-console.log("product_arr" , product_arr);
-console.log( "sumscale" , sumscale);
-console.log( "numList" , numList);
+let apple1:Apple=new Apple("Apple1",125);
+let apple2:Apple=new Apple("Apple1",135);
+let tomato1:Tomato=new Tomato("tomato1",235);
 
 let apple21:Apple=new Apple("Apple2",555);
 let tomato21:Tomato=new Tomato("tomato2",225);
+
+let scales:Scales=new Scales();
+scales.add(apple1);
+scales.add(apple2);
+scales.add(apple21);
+scales.add(tomato21);
+scales.add(tomato1);
+
+let sumscale = scales.getSumScale();
+let numList = scales.getNameList();
+
+console.log( "sumscale" , sumscale);
+console.log( "numList" , numList);
+
+
 
 console.log( "apple21" , apple21);
 console.log( "tomato21" , tomato21);
