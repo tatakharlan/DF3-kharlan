@@ -5,6 +5,13 @@ import MobileClient from './MobileClient';
 import Card from './Card';
 import {mobileEvents} from './events';
 import './MobileCompany.css';
+import {addUser} from '../modules/addUserBtn';
+import {showBlock} from '../modules/addUserBtn';
+import {showActive} from '../modules/addUserBtn';
+import {showAll} from '../modules/addUserBtn';
+import {mobileDeleted} from '../modules/addUserBtn';
+import {mobileSave} from '../modules/addUserBtn';
+import {mobileEdited} from '../modules/addUserBtn';
 
 class MobileCompany extends React.PureComponent {
 
@@ -76,9 +83,9 @@ class MobileCompany extends React.PureComponent {
     this.setState({dBlock: true});
     this.setState({dActive: false});
   }
-  addUser = () => {
-    this.setState({editedClient:null});
-    this.setState({newClient:true});
+  addUserAct =(edit, newCl) => {
+    this.setState({editedClient:edit});
+    this.setState({newClient:newCl});
   }
   render() {
 
@@ -128,7 +135,7 @@ class MobileCompany extends React.PureComponent {
           {clientsCode}          
           </tbody>
           </table>
-        <input type="button" value="Добавить" onClick={this.addUser} />  
+        <input type="button" value="Добавить" onClick={addUser} />  
         {
             ((this.state.newClient)||(this.state.editedClient)) &&
                 <div className="Card">                  
