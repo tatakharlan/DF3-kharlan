@@ -4,7 +4,7 @@ interface IScalable {
     getName():string;
 
 }
-class Product implements IScalable {
+class Product {
 
     name:string;
     scale:number;    
@@ -23,28 +23,52 @@ class Product implements IScalable {
     }
     
 }
-class Apple extends Product {
-  
+class Apple  implements IScalable {
+    name:string;
+    scale:number;    
+
+    constructor(_name:string,_scale:number) {        
+        this.name = _name;
+        this.scale= _scale; 
+    }
+
+    getScale():number {
+        return this.scale;
+    }
+
+    getName():string {
+        return this.name;
+    }
 }
-class Tomato extends Product {
- 
+class Tomato  implements IScalable {
+    name:string;
+    scale:number;    
+
+    constructor(_name:string,_scale:number) {        
+        this.name = _name;
+        this.scale= _scale; 
+    }
+
+    getScale():number {
+        return this.scale;
+    }
+
+    getName():string {
+        return this.name;
+    }
 }
 class Scales {
 
-    products: Array<Product>;          
+    products:IScalable[] =[];          
 
-    constructor() {
-        this.products =[];   
-    }
-
-    add(_product:Product):void {
+    add(_product:IScalable):void {
         this.products.push(_product);
     }
 
     getSumScale():number {        
         let _sumScale = 0;   
        
-        this.products.forEach(function(prod:Product){
+        this.products.forEach(function(prod:IScalable){
             let scale:number = prod.getScale();
             _sumScale = _sumScale + scale;            
         })
@@ -53,7 +77,7 @@ class Scales {
     getNameList():Array<string> { 
         let nameList:Array<string> = [];  
 
-        this.products.forEach(function(prod:Product){
+        this.products.forEach(function(prod:IScalable){
             let name:string = prod.getName();
             nameList.push(name);            
         })
