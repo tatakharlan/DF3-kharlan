@@ -4,25 +4,7 @@ interface IScalable {
     getName():string;
 
 }
-class Product {
 
-    name:string;
-    scale:number;    
-
-    constructor(_name:string,_scale:number) {        
-        this.name = _name;
-        this.scale= _scale; 
-    }
-
-    getScale():number {
-        return this.scale;
-    }
-
-    getName():string {
-        return this.name;
-    }
-    
-}
 class Apple  implements IScalable {
     name:string;
     scale:number;    
