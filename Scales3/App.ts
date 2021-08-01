@@ -74,11 +74,9 @@ class ScalesStorageEngineArray implements IStorageEngine {
 
 class ScalesStorageEngineLocalStorage implements IStorageEngine {
     key:string = "Prod";
-    products:Array<Product>;
-
+    
     constructor() {
-        this.products =[]; 
-        localStorage.clear();  
+        localStorage.Prod = [];  
     }
 
     addItem(_product:Product):void {
