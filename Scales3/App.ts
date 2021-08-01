@@ -30,8 +30,8 @@ class Scales<StorageEngine extends IStorageEngine>{
 
     se:IStorageEngine;
 
-    constructor() {
-       this.se = scalesStorageEngine;
+    constructor(se_:IStorageEngine) {
+       this.se = se_;
     }
 
     add(_product:Product):void {
@@ -74,10 +74,13 @@ class ScalesStorageEngineArray implements IStorageEngine {
 
 class ScalesStorageEngineLocalStorage implements IStorageEngine {
     key:string = "Prod";
-    products: Array<Product>;
+    products:Array<Product>;
+
     constructor() {
-        this.products =[];   
+        this.products =[]; 
+        localStorage.clear();  
     }
+
     addItem(_product:Product):void {
         let a:any[];
         if(localStorage.Prod) {
@@ -99,10 +102,10 @@ class ScalesStorageEngineLocalStorage implements IStorageEngine {
     
 
 } 
-let scalesStorageEngine = new ScalesStorageEngineArray();
+let scalesStorageEngine1 = new ScalesStorageEngineArray();
 
-console.log("ScalesStorageEngineArray1", scalesStorageEngine);
-let Scales1 = new Scales<ScalesStorageEngineArray>();
+console.log("ScalesStorageEngineArray1", scalesStorageEngine1);
+let Scales1 = new Scales<ScalesStorageEngineArray>(scalesStorageEngine1);
 console.log("Scales1", Scales1);
 
 let product1 = new Product("Apple", 223);
@@ -111,13 +114,12 @@ let product2 = new Product("Apple2", 233);
 Scales1.add(product1);
 Scales1.add(product2);
 
-Scales1.getSumScale();
 console.log("Scales1.getSumScale()", Scales1.getSumScale());
 console.log("Scales1.getNameList()", Scales1.getNameList());
 
-scalesStorageEngine = new ScalesStorageEngineLocalStorage();
+let scalesStorageEngine2 = new ScalesStorageEngineLocalStorage();
 
-let Scales2 = new Scales<ScalesStorageEngineLocalStorage>();
+let Scales2 = new Scales<ScalesStorageEngineLocalStorage>(scalesStorageEngine2);
 console.log("Scales2", Scales2);
 
 let product3= new Product("Apple22", 223);
