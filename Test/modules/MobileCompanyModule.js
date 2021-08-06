@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 
 import {mobileEvents} from './events';
 import MobileCompanyRender from '../views/MobileCompanyRender';
-
+let clientsArr=[ 
+  {id:101, fam:"Иванов", im:"Иван", otch:"Иванович", balance:200, status: "active"}, 
+  {id:105, fam:"Сидоров", im:"Сидор", otch:"Сидорович", balance:250, status: "active"}, 
+  {id:110, fam:"Петров", im:"Пётр", otch:"Петрович", balance:180, status: "active"},
+  {id:120, fam:"Григорьев", im:"Григорий", otch:"Григорьевич", balance:220, status: "block"},
+];
 
 class MobileCompanyModule extends React.PureComponent {
 
-  static propTypes = {
-    name: PropTypes.string.isRequired,
+  static propTypes = {    
     clients:PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
@@ -20,9 +24,14 @@ class MobileCompanyModule extends React.PureComponent {
       })
     ),
   };
-
+  clientsArr=[ 
+    {id:101, fam:"Иванов", im:"Иван", otch:"Иванович", balance:200, status: "active"}, 
+    {id:105, fam:"Сидоров", im:"Сидор", otch:"Сидорович", balance:250, status: "active"}, 
+    {id:110, fam:"Петров", im:"Пётр", otch:"Петрович", balance:180, status: "active"},
+    {id:120, fam:"Григорьев", im:"Григорий", otch:"Григорьевич", balance:220, status: "block"},
+  ];
   state = {
-    clients: this.props.clients,
+    clients: this.clientsArr,
     newClient: false,
     editedClient: null,
     dBlock:false,

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import MobileCompanyModule from './modules/MobileCompanyModule';
 
-let companyName='Velcom';
+
 let clientsArr=[ 
   {id:101, fam:"Иванов", im:"Иван", otch:"Иванович", balance:200, status: "active"}, 
   {id:105, fam:"Сидоров", im:"Сидор", otch:"Сидорович", balance:250, status: "active"}, 
@@ -15,7 +15,6 @@ let clientsArr=[
 
 ReactDOM.render(
   <MobileCompanyModule 
-    name={companyName}
     clients={clientsArr}
   />
   , document.getElementById('container') 
