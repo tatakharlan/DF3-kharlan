@@ -3,11 +3,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import MobileClient from '../components/MobileClient';
+import MobileClientView from '../views/MobileClientView';
 
 test('работа MobileClient', () => {
     const component = renderer.create(
-        <MobileClient />
+        <MobileClientView />
       );
     let componentTree=component.toJSON();
     expect(componentTree).toMatchSnapshot();

@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MobileCompany from './components/MobileCompany';
+import MobileCompanyModule from './modules/MobileCompanyModule';
 
 let companyName='Velcom';
 let clientsArr=[ 
@@ -14,7 +14,7 @@ let clientsArr=[
 ];
 
 ReactDOM.render(
-  <MobileCompany 
+  <MobileCompanyModule 
     name={companyName}
     clients={clientsArr}
   />
