@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer';
 
 import MobileCompanyModule from '../modules/MobileCompanyModule';
 
-test('работа MobileCompanyModule', () => {
+test( () => {
 
 
     const component = renderer.create(

@@ -1,5 +1,6 @@
 import React from 'react';
-
+import MobileClientModule from '../modules/MobileClientModule';
+import CardModule from '../modules/CardModule';
 class MobileCompanyRender extends React.PureComponent {
     render() {
 
@@ -23,7 +24,7 @@ class MobileCompanyRender extends React.PureComponent {
             editClient[0].id = parseInt(Math.max(...newClients.map(user => user.id)) + 1);         
           }
           let cardCode = editClient.map( client => {
-            return <CardModule key={client.id} id= {client.id} newClient = {this.state.newClient} info={client}  editedClient = {this.state.editedClient} /> 
+            return <CardModule key={client.id} id= {client.id} newClient = {this.props.newClient} info={client}  editedClient = {this.props.editedClient} /> 
           }
           )  
         return (
