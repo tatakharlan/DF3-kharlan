@@ -6,8 +6,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'sprite.component.html',
 })
 export class SpriteComponent {
-  @Output("spriteoutput")
+  @Output("clicked")
   private spriteOutputEE=new EventEmitter<number>();
+  
   @Input("url")
   public url:string;
 
@@ -23,7 +24,7 @@ export class SpriteComponent {
   @Input("offset-y")
   public offsety:number;
 
-  clicked(s:number):void {
-    this.spriteOutputEE.emit(s);
+  clicked():void {
+    this.spriteOutputEE.emit();
   }
 }

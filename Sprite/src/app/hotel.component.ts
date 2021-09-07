@@ -29,7 +29,7 @@ export class HotelComponent {
   getOffsetY():number {
     return this.offsety;
   };
-  clicked(s:number):void {
-    this.offsetx-=s;
+  clickedCard():void {
+    this.offsetx-=this.height;
   }
 }
