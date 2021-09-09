@@ -1,0 +1,7 @@
+<div>
+<input type="text" #ticketCount (change)="false" value="1"/>
+<button type="button" (click)=getTicket(ticketCountRef.nativeElement.value)>Купить</button>
+
+<div class="tickets" >{{getTicketsList()}}</div>
+
+</div>
